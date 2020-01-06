@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>{{ getTitle }}</div>
+        <div v-html="getName"></div>
+        <input type="text" v-model="getGender">
+        <input type="text" v-model="info.hobby">
+        <p>{{ getInstr }}</p>
+        <div v-for="hobby">{{ index }} - {{ item }}</div>
+        <button v-on:click="getInfo">获取爱好</button>
+    </div>
+    
+    <script src="./index.js"></script>
+    <script type="text/javascript">
+        const vm = new MVVM({
+            el: '#app',
+            data: {
+                getTitle: 'introduce myself',
+                getName: '<span>kk</span>',
+                getGender: '100',
+                hobbyArr: ['basketball', 'swimming', 'running'],
+                info: {
+                    hobby: 'swimming'
+                }
+            },
+            computed: {
+                getInstr () {
+                    return this.getGender + '-' + this.info.hobby
+                }
+            },
+            methods: {
+                getInfo () {
+                    this.info.hobby = this.hobbyArr[parseInt(Math.random() * 3)]
+                }
+            }
+        })
+
+        vm.$watch('info.hobby', function() {
+            console.log(arguments)
+        })
+    </script>
+</body>
+</html>
